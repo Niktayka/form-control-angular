@@ -1,0 +1,93 @@
+<div class="container" *ngIf="cartProducts.length > 0; else empty">
+    <h2 class="text-center">Your order:</h2>
+
+    <table>
+        <tbody>
+            <tr *ngFor="let cartProduct of cartProducts; let i = index">
+                <td>{{ cartProduct.type }}</td>
+                <td>{{ cartProduct.title }}</td>
+                <td>{{ cartProduct.price }} $</td>
+                <th>{{ i }}</th> 
+                <td> {{cartProduct.amount}} </td>
+                <td>
+                    <button  class="btn btn-danger"  (click)="add(cartProduct)"></button>
+                </td>
+                <td>
+                    <button  class="btn btn-black" (click)="minus(cartProduct)"></button>
+                </td>
+                <!-- <td [formGroup]="form"><input (keyup)=getVal($event.target.value) formControlName="number" class="cart-page-input" min="0" placeholder="0" id="number" type="number"></td> -->
+                <!-- <td>
+                    
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-control">
+                        <input (keyup)=getVal($event) *ngFor="let coast of cartProducts; let i = index" id="number" type="number" formControlName="number" >
+                    </div>
+                </form>
+                </td> -->
+                <td>
+                    <button class="btn btn-danger" (click)="delete(cartProduct)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <b class="right">Total: {{total()}} $</b>
+    <!-- <b class="right">Total: {{totalPrice * currentVal}} $</b> -->
+
+    <h2 class="text-center">Delivery:</h2>
+
+    <div *ngIf="added" class="text-center text-danger">{{ added }}</div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="form-control">
+            <label for="name">Name</label>
+            <input id="name" type="name" formControlName="name">
+            <div *ngIf="form.get('name').touched && form.get('name').invalid" class="validation">
+                <small *ngIf="form.get('name').errors.required">Enter your name</small>
+            </div>
+        </div>
+
+        <!-- <div class="form-control">
+            <label for="number">Number</label>
+            <input id="number" type="number" formControlName="number">
+            <div *ngIf="form.get('number') && form.get('number').invalid" class="validation">
+                <small *ngIf="form.get('number').errors.required">Enter your number</small>
+            </div>
+        </div> -->
+
+        
+        <div class="form-control">
+            <label for="phone">Phone number</label>
+            <input id="phone" type="phone" formControlName="phone">
+            <div *ngIf="form.get('phone').touched && form.get('phone').invalid" class="validation">
+                <small *ngIf="form.get('phone').errors.required">Enter your phone number</small>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="address">Address</label>
+            <input id="address" type="address" formControlName="address">
+            <div *ngIf="form.get('address').touched && form.get('address').invalid" class="validation">
+                <small *ngIf="form.get('address').errors.required">Enter your address</small>
+            </div>
+        </div>
+    
+        <div class="form-control">
+            <label for="payment">Payment method:</label>
+            <select formControlName="payment">
+                <option value="Cash">Cash</option>
+                <option value="Card">Card</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" [disabled]="form.invalid || submitted" >Add</button>
+        
+    
+    </form>
+</div>
+
+<ng-template #empty>
+    <h2 class="text-center">Cart is empty, select product</h2>
+</ng-template>
+
